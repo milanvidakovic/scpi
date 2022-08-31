@@ -109,6 +109,19 @@ public class DS1054Z extends Scope {
 		System.out.println(settings);
 	}
 	
+	public void setHorizontalScale(double scale) throws IOException {
+		writeCommand("TIM:SCAL "+Double.toString(scale));
+	}
+
+	
+	public void setVerticalScale(int channel, double scale, boolean fine) throws IOException {
+		if(fine)
+			writeCommand("CHAN"+Integer.toString(channel)+":VERN ON");
+		else
+			writeCommand("CHAN"+Integer.toString(channel)+":VERN OFF");
+		
+		writeCommand("CHAN"+Integer.toString(channel)+":SCAL "+Double.toString(scale));
+	}
 
 	@Override
 	public void setFormat(Format format) throws IOException {
@@ -160,8 +173,8 @@ public class DS1054Z extends Scope {
 		}
 	}
 
-	private double measure(int channel) throws IOException {
-		writeCommand("MEAS:STAT:ITEM VPP,CHAN1");
+	public double measure(int channel) throws IOException {
+		writeCommand("MEAS:STAT:ITEM VPP,CHAN"+Integer.toString(channel));
 		writeCommand("MEAS:STAT:ITEM? CURR,VPP");
 		return readNumber();
 	}
@@ -176,4 +189,6 @@ public class DS1054Z extends Scope {
 			e.printStackTrace();
 		}
 	}
+
+
 }
