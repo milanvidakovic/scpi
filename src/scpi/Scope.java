@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.Socket;
 
+import scpi.rigol.RigolSettings;
+
 /**
  * Base class for the scope.
  * @author minja
@@ -66,11 +68,13 @@ public abstract class Scope extends Scpi {
 	 */
 	public abstract void readScopeSettings() throws IOException;
 	
+	
 	/**
 	 * Loads BMP image from the scope.
 	 */
 	public abstract BufferedImage readBmp() throws IOException;
 
+	
 	/**
 	 * Sets the communication format. {@link Format}
 	 * @param format
